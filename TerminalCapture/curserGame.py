@@ -76,7 +76,7 @@ def main(stdscr):
         
         
         win.clear()
-        win.addstr(1, 1, "Use arrow keys to move 'X'. Press 'q' to quit.")       #instructions
+        win.addstr(1, 1, "Use arrow keys to move 'U'. Press 'q' to quit.")       #instructions
         # win.addstr(2, 1, f"Window Size: {winHeight}x{winWidth}")                 #window size
         # win.addstr(3, 1, f"Position: ({x-1}, {y-5})")                            #current position
         # win.addstr(4, 1, f"E Position: ({ex-1}, {ey})")                          #enemy position
