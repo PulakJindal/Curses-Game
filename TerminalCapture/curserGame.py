@@ -43,16 +43,16 @@ def catchTheFruit(stdscr):
     drop.append({"x" : ex, "y" : ey})   #new drop at random position
     spawnTimer = 0
     
-    PLAYER_INTERVAL = 0.03
-    ENEMY_INTERVAL = max(0.05, 0.15 - score * 0.005)
+    PLAYER_INTERVAL = 0.03                            #player movement speed
+    ENEMY_INTERVAL = max(0.05, 0.15 - score * 0.005)     #enemy movement speed
 
-    last_player_update = time.time()
-    last_enemy_update = time.time()
+    last_player_update = time.time()                    #last player update time
+    last_enemy_update = time.time()                     #last enemy update time
 
     while True:        
         now = time.time()
         
-        if now - last_player_update > PLAYER_INTERVAL:
+        if now - last_player_update > PLAYER_INTERVAL:      #player movement update
             key = -1
             while True:                # Drain the input buffer
                 ch = win.getch()
@@ -70,13 +70,14 @@ def catchTheFruit(stdscr):
             elif key == ord('q'):
                 print("Exit...")
                 break
-            last_player_update = now
+            last_player_update = now                         #update last player movement time
         
-        if now - last_enemy_update > ENEMY_INTERVAL:
+        if now - last_enemy_update > ENEMY_INTERVAL:         #enemy movement update
             spawnTimer += 1
             if spawnTimer >= max(0, 20-(0.1*score)):
                 spawnTimer = 0
-                ex = random.randint(max(x-15, 1), min(x+15, winWidth-2))
+                distanceFromPlayer = 5+(score*0.1)
+                ex = random.randint(max(x-distanceFromPlayer, 1), min(x+distanceFromPlayer, winWidth-2))
                 drop.append({"x" : ex, "y" : ey})   #new drop at random position
                 
             new_drop = []
@@ -96,7 +97,7 @@ def catchTheFruit(stdscr):
                         continue
                 new_drop.append(d)
             drop = new_drop
-            last_enemy_update = now
+            last_enemy_update = now                           #update last enemy movement time
         
         win.clear()
         win.addstr(1, 1, "Use arrow keys to move 'U'. Press 'q' to quit.")       #instructions
@@ -112,7 +113,7 @@ def catchTheFruit(stdscr):
         win.border()
         win.refresh()
         
-        time.sleep(0.01)
+        # time.sleep(0.01)
 
 
 
@@ -125,10 +126,10 @@ def spaceFight(stdscr):
 
     height, width = stdscr.getmaxyx()
     
-    winWidth = int(width * 0.4)
+    winWidth = int(width * 0.3)
     winHeight = height
     
-    win = curses.newwin(winHeight, winWidth, 0, int(width*0.3))
+    win = curses.newwin(winHeight, winWidth, 0, int(width*0.35))
     
     win.keypad(True)        #allows to get keys like arrows
     win.border()            #draw border around window
@@ -180,7 +181,7 @@ def spaceFight(stdscr):
             if spawnTimer >= max(0, 20-(0.1*score)):
                 spawnTimer = 0
                 ex = random.randint(max(x-15, 2), min(x+15, winWidth-3))
-                drop.append({"x" : ex, "y" : 1})   #new drop at random position
+                drop.append({"x" : ex, "y" : ey})   #new drop at random position
                     
             new_drop = []
             temp_score = 0
@@ -204,26 +205,24 @@ def spaceFight(stdscr):
             last_enemy_update = now
         
         win.clear()
-        win.addstr(1, 1, "Use arrow keys to move 'U'. Press 'q' to quit.")       #instructions
+        win.addstr(1, 1, "Use arrow keys to move 'A'. Press 'q' to quit.")       #instructions
         # win.addstr(2, 1, f"Window Size: {winHeight}x{winWidth}")                 #window size
         # win.addstr(3, 1, f"Position: ({x-1}, {y-5})")                            #current position
         # win.addstr(4, 1, f"E Position: ({ex-1}, {ey})")                          #enemy position
         win.hline(2, 1, curses.ACS_HLINE, winWidth-2)                            #horizontal line below info
         win.addstr(2, winWidth-12, f"Score: {score}")                            #score display
         win.addstr(2, 2, f"Lives: {lives}")                                      #lives display
-        win.addstr(y, x, "U")
+        win.addstr(y, x, "A")
         for d in drop:
             win.addstr(d["y"], d["x"], "OOO")
         win.border()
         win.refresh()
         
-        time.sleep(0.01)
-
 def main(stdscr):
     
     parser = argparse.ArgumentParser(
         prog = "curserGame.py",
-        description="Network Packet Sniffer"
+        description="Terminal Games"
         )
     
     parser.add_argument(
