@@ -4,6 +4,8 @@ import time
 import random
 import argparse
 
+
+#================Game Over Function================
 def gameOver(win, score):
     win.nodelay(False)
     win.clear()
@@ -13,6 +15,8 @@ def gameOver(win, score):
     win.refresh()
     print("Game Over. Final Score:", score)
 
+
+#================Catch the Fruit Game================
 def catchTheFruit(stdscr):
     score = 0
     lives = 3
@@ -116,7 +120,7 @@ def catchTheFruit(stdscr):
         # time.sleep(0.01)
 
 
-
+#================Dodge the Enemy Game================
 def spaceFight(stdscr):
     score = 0
     lives = 3
