@@ -11,8 +11,11 @@ def gameOver(win, score):
     win.clear()
     win.addstr( win.getmaxyx()[0]//2, win.getmaxyx()[1]//2 - 5, "GAME OVER")
     win.addstr( win.getmaxyx()[0]//2 + 1, win.getmaxyx()[1]//2 - 7, f"Final Score: {score}")
-    win.getch()
-    win.refresh()
+    win.addstr( win.getmaxyx()[0]//2 + 3, win.getmaxyx()[1]//2 - 9, "Press Enter to exit")
+    key = win.getch()
+    while key not in [10, 13, curses.KEY_ENTER]:
+        key = win.getch()
+        win.refresh()
     print("Game Over. Final Score:", score)
 
 
@@ -192,7 +195,7 @@ def spaceFight(stdscr):
                 d["y"] += 1
                 
                 xv = d["x"]
-                if (xv == x or xv == x+1 or xv == x-1) and d["y"] == y:
+                if (xv == x or x == xv+2 or x == xv+1) and d["y"] == y:
                     lives -= 1
                     if lives == 0:
                         gameOver(win, score)
