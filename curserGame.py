@@ -81,7 +81,7 @@ def catchTheFruit(stdscr):
             if spawnTimer >= max(0, 20-(0.1*score)):
                 spawnTimer = 0
                 distanceFromPlayer = 5+(score*0.1)
-                ex = random.randint(max(x-distanceFromPlayer, 1), min(x+distanceFromPlayer, winWidth-2))
+                ex = random.randint(int(max(x-distanceFromPlayer, 1)), int(min(x+distanceFromPlayer, winWidth-2)))
                 drop.append({"x" : ex, "y" : ey})   #new drop at random position
                 
             new_drop = []
@@ -184,11 +184,10 @@ def spaceFight(stdscr):
             spawnTimer += 1
             if spawnTimer >= max(0, 20-(0.1*score)):
                 spawnTimer = 0
-                ex = random.randint(max(x-15, 2), min(x+15, winWidth-3))
+                ex = random.randint(int(max(x-15, 2)), int(min(x+15, winWidth-3)))
                 drop.append({"x" : ex, "y" : ey})   #new drop at random position
                     
             new_drop = []
-            temp_score = 0
             for d in drop:
                 d["y"] += 1
                 
